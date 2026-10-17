@@ -866,7 +866,7 @@
             const tier = document.getElementById('modal-tier-select')?.value || 'Not decided';
             const objective = fields[3]?.value || '';
             const subject = encodeURIComponent('Mavern Studio project enquiry — ' + name);
-            const body = encodeURIComponent('Name: ' + name + '\\nEmail: ' + email + '\\nProject type: ' + tier + '\\n\\nProject details:\\n' + objective);
+            const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nProject type: ' + tier + '\n\nProject details:\n' + objective);
             window.location.href = 'mailto:tivariraj424@gmail.com?subject=' + subject + '&body=' + body;
             document.getElementById('modal-form-body').classList.add('hidden');
             document.getElementById('modal-confirmation-body').classList.remove('hidden');
