@@ -5,9 +5,10 @@ A responsive, single-page marketing website for Mavern Studio, a design-led web 
 ## Files
 - `index.html` — page content and metadata
 - `styles.css` — responsive layout, typography, colors, and interactions
-- `script.js` — mobile navigation, FAQ interactions, enquiry form mailto behavior, and footer year
+- `script.js` — mobile navigation, package preselection, enquiry form mailto behavior, and footer year
 - `404.html` — custom not-found page
-- `.nojekyll` — tells GitHub Pages not to process the site with Jekyll
+- `.nojekyll` — keeps GitHub Pages deployment simple
+- `.github/workflows/pages.yml` — deploys the static site with GitHub Actions
 
 ## Before publishing
 1. Replace `hello@example.com` in `index.html` and `script.js` with the business email you want enquiries sent to.
@@ -16,10 +17,9 @@ A responsive, single-page marketing website for Mavern Studio, a design-led web 
 4. Decide on your domain and confirm domain/trademark availability before buying or advertising it.
 
 ## Publish using GitHub Pages
-1. Create a new GitHub repository (for example, `mavern-studio`).
-2. Upload all files from this folder to the repository root.
-3. Open **Settings → Pages**. Under **Build and deployment**, select **Deploy from a branch**, choose `main` and `/(root)`, then save.
-4. GitHub Pages will show the default published URL after the deployment finishes.
+1. Repository: [`rajtivari/-mavern-studio`](https://github.com/rajtivari/-mavern-studio).
+
+Deployment is configured with `.github/workflows/pages.yml`. On GitHub, open **Settings → Pages** and set the **Build and deployment** source to **GitHub Actions**. Then check **Actions** and wait for the Pages deployment workflow to complete. The expected project URL is `https://rajtivari.github.io/-mavern-studio/` once GitHub Pages is enabled and the workflow succeeds.
 
 ## Connect your own domain
 1. Buy a domain from a registrar after confirming it is available.
