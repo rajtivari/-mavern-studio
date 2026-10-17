@@ -49,7 +49,7 @@
       event.preventDefault();
       if (!form.reportValidity()) return;
       const data = new FormData(form);
-      const recipient = 'hello@example.com'; // Replace with the studio's real enquiry email before launch.
+      const recipient = 'tivariraj424@gmail.com';
       const subject = 'Mavern Studio project enquiry — ' + (data.get('business') || data.get('name') || 'New enquiry');
       const lines = [
         'Name: ' + data.get('name'),
