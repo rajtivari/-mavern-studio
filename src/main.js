@@ -108,7 +108,7 @@ function hero3d(){
 const cv=$('#gl'),box=$('#kc'),gl=cv.getContext('webgl',{antialias:true,alpha:true,premultipliedAlpha:false});if(!gl){box.style.display='none';return}
 const VS=`attribute vec3 aP,aN;attribute vec2 aU;uniform mat4 uVP,uM;varying vec3 vN,vW;varying vec2 vU;void main(){vec4 w=uM*vec4(aP,1.);gl_Position=uVP*w;vN=mat3(uM)*aN;vW=w.xyz;vU=aU;}`;
 const FS=`precision mediump float;varying vec3 vN,vW;varying vec2 vU;uniform vec3 uC;uniform float uK,uT,uZ;uniform sampler2D uS;
-vec3 env(vec3 r){float y=r.y*.5+.5;vec3 c=vec3(.055,.06,.075);c=mix(c,vec3(.82,.85,.9),smoothstep(.70,.94,y));c=mix(c,vec3(.025,.03,.04),smoothstep(.18,.02,y));float strip=pow(max(0.,1.-abs(r.x+.32)*9.),7.);float strip2=pow(max(0.,1.-abs(r.x-.62)*13.),9.);float top=pow(max(0.,dot(r,normalize(vec3(-.35,.8,.48))),0.),32.);c+=vec3(.92,.96,1.)*(strip*.9+strip2*.72+top*.45);c+=vec3(.18,.2,.24)*pow(max(dot(r,normalize(vec3(.2,.25,.95))),0.),18.);return c;}
+vec3 env(vec3 r){float y=r.y*.5+.5;vec3 c=vec3(.055,.06,.075);c=mix(c,vec3(.82,.85,.9),smoothstep(.70,.94,y));c=mix(c,vec3(.025,.03,.04),smoothstep(.18,.02,y));float strip=pow(max(0.,1.-abs(r.x+.32)*9.),7.);float strip2=pow(max(0.,1.-abs(r.x-.62)*13.),9.);float top=pow(max(dot(r,normalize(vec3(-.35,.8,.48))),0.),32.);c+=vec3(.92,.96,1.)*(strip*.9+strip2*.72+top*.45);c+=vec3(.18,.2,.24)*pow(max(dot(r,normalize(vec3(.2,.25,.95))),0.),18.);return c;}
 void main(){vec3 n=normalize(vN),v=normalize(vec3(0.,0.,uZ)-vW);
 if(uT>.5){if(dot(n,v)<0.)discard;gl_FragColor=texture2D(uS,vU);return;}
 vec3 r=reflect(-v,n),L=normalize(vec3(-.35,.6,.72));float f=pow(1.-max(dot(n,v),0.),3.);
