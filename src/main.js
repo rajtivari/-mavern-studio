@@ -87,7 +87,7 @@ coin(g,c,bk){const r=39,cy=52;sh(g,16,12);g.beginPath();g.arc(0,cy+5,r,0,6.283);
 function link(g,a,b,j,tw,sc){const len=Math.hypot(b.x-a.x,b.y-a.y),ph=(j%2?1.5708:0)+tw,w=Math.abs(Math.cos(ph))*5.4*sc+1.4*sc;g.save();g.translate((a.x+b.x)/2,(a.y+b.y)/2);g.rotate(Math.atan2(-(b.x-a.x),b.y-a.y));sh(g,6*sc,3*sc);g.beginPath();g.ellipse(0,0,w,len*.78,0,0,6.283);g.lineWidth=3.8*sc;g.strokeStyle='#3d434d';g.stroke();ns(g);g.lineWidth=2.1*sc;g.strokeStyle=gd(g,-w,0,w,0,[[0,'#8b93a0'],[.4,'#fff'],[.62,'#c9d0da'],[1,'#6a727e']]);g.stroke();g.restore()}
 function rig(cv,o){const r={cv,g:cv.getContext('2d'),hero:!!o.hero,vis:true,drop:o.hero&&!RMM?-320:0,S:o.S.map(d=>({d,P:[],ph:(Math.random()-.5)*1.8,pv:0}))};new IntersectionObserver(e=>r.vis=e[0].isIntersecting).observe(cv);RIGS.push(r);size(r);return r}
 function anc(r,s){return r.hero?{x:r.cx+s.d.off*r.sp,y:r.ringY+r.ry*Math.sqrt(Math.max(0,1-((s.d.off*r.sp)/r.rx)**2))+r.drop}:{x:r.W/2,y:0}}
-function size(r){const cv=r.cv,dp=Math.min(devicePixelRatio||1,2);r.W=cv.clientWidth;r.H=cv.clientHeight;cv.width=r.W*dp;cv.height=r.H*dp;r.dp=dp;r.sc=r.hero?cl(Math.min(r.W/850,r.H/560),.62,1.3):1;r.L=(r.hero?16:13)*r.sc;r.cx=r.W/2;r.sp=118*r.sc;r.ringY=98*Math.max(.8,r.sc);r.ry=20;r.rx=Math.min(r.W*.47,3.1*r.sp+50);
+function size(r){const cv=r.cv,dp=Math.min(devicePixelRatio||1,2);r.W=cv.clientWidth;r.H=cv.clientHeight;cv.width=r.W*dp;cv.height=r.H*dp;r.dp=dp;r.sc=r.hero?cl(Math.min(r.W/650,r.H/450),.78,1.35):1;r.L=(r.hero?16:13)*r.sc;r.cx=r.W/2;r.sp=92*r.sc;r.ringY=72*Math.max(.8,r.sc);r.ry=18;r.rx=Math.min(r.W*.39,170);
  r.S.forEach(s=>{const a=anc(r,s),n=Math.max(3,Math.round(s.d.len*(r.hero?r.sc:1)/r.L));s.n=n;s.P=[];for(let j=0;j<=n;j++)s.P.push({x:a.x,y:a.y+j*r.L,px:a.x,py:a.y+j*r.L})})}
 function step(r){const{S,L,sc}=r,b=r.cv.getBoundingClientRect(),mx=gx-b.left,my=gy-b.top,pr=(r.hero?80:60)*sc,gr=L*.042;r.drop+=(0-r.drop)*.05;
 S.forEach((s,si)=>{const P=s.P,a=anc(r,s);P[0].x=P[0].px=a.x;P[0].y=P[0].py=a.y;
@@ -140,14 +140,14 @@ coin:[eyelet(),body(lathe([[0,9],[16,9],[30,9],[36,7],[38,3],[38,-3],[36,-7],[30
 plate:[eyelet(),body(rbox(44,140,18,9),[.08,.72,.12],.4,0,-82),dec(quad(36,108),'V',0,-82,9.5)],
 code:[eyelet(),body(rbox(84,60,18,10),[1,.82,.2],.4,0,-44),dec(quad(62,31),'C',0,-44,9.5)]};
 const LG=oval(4.8,12.6,1.9,28,8),CAR=oval(22,64,8.5,40,10),CLA=rbox(16,30,12,5);let RG;
-const SP=[{off:-2.5,len:210,c:{t:'m',cw:100}},{off:-1.5,len:300,c:{t:'can',cw:72}},{off:-.5,len:230,c:{t:'key',cw:64}},{off:.5,len:330,c:{t:'coin',cw:80}},{off:1.5,len:190,c:{t:'plate',cw:50}},{off:2.5,len:270,c:{t:'code',cw:84}}],ZS=[28,-30,40,-14,32,-42];
+const SP=[{off:-1.02,len:220,c:{t:'m',cw:100}},{off:-.72,len:300,c:{t:'can',cw:72}},{off:-.28,len:250,c:{t:'key',cw:64}},{off:.18,len:325,c:{t:'coin',cw:80}},{off:.62,len:210,c:{t:'plate',cw:50}},{off:.98,len:275,c:{t:'code',cw:84}}],ZS=[18,-48,48,-24,62,-62];
 const r={cv,hero:true,vis:true,drop:RMM?0:-320,S:SP.map(d=>({d,P:[],ph:(Math.random()-.5)*1.8,pv:0}))};let VP,camZ;
-function build(){size(r);camZ=r.H/2/Math.tan(.2618);const f=1/Math.tan(.2618),a=r.W/r.H,P=new Float32Array(16);P[0]=f/a;P[5]=f;P[10]=-(4000+10)/3990;P[11]=-1;P[14]=-2*4000*10/3990;VP=mul(P,Tm(0,0,-camZ));gl.viewport(0,0,cv.width,cv.height);RG=oval(r.rx,36,6.5,72,10)}
+function build(){size(r);camZ=r.H/2/Math.tan(.2618);const f=1/Math.tan(.2618),a=r.W/r.H,P=new Float32Array(16);P[0]=f/a;P[5]=f;P[10]=-(4000+10)/3990;P[11]=-1;P[14]=-2*4000*10/3990;VP=mul(P,Tm(0,0,-camZ));gl.viewport(0,0,cv.width,cv.height);RG=oval(105,91,6.5,72,10)}
 build();new IntersectionObserver(e=>r.vis=e[0].isIntersecting).observe(box);addEventListener('resize',build);
 function render(t){gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.uniformMatrix4fv(UF.uVP,false,VP);gl.uniform1f(UF.uZ,camZ);gl.uniform1i(UF.uS,0);
 const{W,H,sc}=r,wx=x=>x-W/2,wy=y=>H/2-y,dr=(g,M,c,k,tx)=>{gl.bindBuffer(gl.ARRAY_BUFFER,g.p);gl.vertexAttribPointer(AL[0],3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,g.n);gl.vertexAttribPointer(AL[1],3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,g.u);gl.vertexAttribPointer(AL[2],2,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,g.i);gl.uniformMatrix4fv(UF.uM,false,M);gl.uniform3fv(UF.uC,c);gl.uniform1f(UF.uK,k);gl.uniform1f(UF.uT,tx?1:0);if(tx)gl.bindTexture(gl.TEXTURE_2D,TEX[tx]);gl.drawElements(gl.TRIANGLES,g.c,gl.UNSIGNED_SHORT,0)};
-const ry=r.ringY+r.drop;dr(RG,mul(Tm(0,wy(ry),0),Rx(-1.2)),CR,1);
-const cm=mul(Tm(wx(r.cx-r.rx*.98),wy(ry+r.ry+62*sc),-12),mul(Rz(-.35+Math.sin(t*.001)*.04),Sm(sc)));dr(CAR,cm,[1,.33,.07],.5);dr(CLA,mul(cm,Tm(-10,52,0)),CR,1);
+const ry=r.ringY+r.drop;dr(RG,mul(Tm(wx(r.cx-26),wy(ry+10),-36),mul(Rz(-.42),Rx(-.85))),CR,1);dr(RG,mul(Tm(wx(r.cx+28),wy(ry+4),-42),mul(Rz(.35),Rx(-.75))),CR,1);
+const cm=mul(Tm(wx(r.cx-r.rx*.72),wy(ry+54*sc),-55),mul(Rz(-.48+Math.sin(t*.001)*.025),Sm(sc*1.08)));dr(CAR,cm,[1,.28,.045],.5);dr(CLA,mul(cm,Tm(-10,52,0)),CR,1);
 r.S.forEach((s,si)=>{const P=s.P,n=s.n,z=ZS[si];for(let j=0;j<n;j++){const a=P[j],b=P[j+1],dx=b.x-a.x,dy=-(b.y-a.y);dr(LG,mul(Tm(wx((a.x+b.x)/2),wy((a.y+b.y)/2),z),mul(Rz(Math.atan2(-dx,dy)),mul(Ry((j%2?1.5708:0)+s.ph*.5*Math.min(1,j/4)),Sm(sc)))),CR,1)}
 const e=P[n],p=P[n-1],B=mul(Tm(wx(e.x),wy(e.y),z),mul(Rz(Math.atan2(e.x-p.x,e.y-p.y)),mul(Ry(s.ph),Sm(sc))));CH[s.d.c.t].forEach(q=>dr(q.g,mul(B,q.m),q.c,q.k,q.t))})}
 let lt=0;(function lp(t){requestAnimationFrame(lp);if(!r.vis)return;const k=cl(Math.round((t-lt)/16.7),1,3);lt=t;for(let i=0;i<k;i++)step(r);render(t)})(0);
