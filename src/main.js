@@ -108,7 +108,8 @@ function hero3d(){
 const old=$('#gl'),box=$('#kc');if(!old||!box)return;
 old.style.display='block';
 const cv=document.createElement('canvas');cv.id='gl3d';cv.setAttribute('aria-label','Realistic 3D Mavern Studio keychain with chrome rings, chains and branded charms');cv.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none';box.appendChild(cv);
-const boot=document.createElement('script');boot.type='module';boot.textContent=String.raw`
+const im=document.createElement('script');im.type='importmap';im.textContent=JSON.stringify({imports:{three:'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js'}});document.head.appendChild(im);
+const boot=document.createElement('script');boot.type='module';boot.onerror=()=>{console.error('Mavern 3D module failed to load');const fallback=document.getElementById('gl');if(fallback)fallback.style.display='block';const cv=document.getElementById('gl3d');if(cv)cv.style.display='none';};boot.textContent=String.raw`
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
 import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/environments/RoomEnvironment.js';
 const canvas=document.getElementById('gl3d'),host=document.getElementById('kc');
