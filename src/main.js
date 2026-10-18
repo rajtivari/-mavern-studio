@@ -105,77 +105,49 @@ let lt=0;(function hl(t){requestAnimationFrame(hl);const k=cl(Math.round((t-lt)/
 const TG=(w,h,c,fg,label,fs,x)=>Object.assign({t:'tag',w,h,c,fg,label,fs,cw:w},x||{});
 
 function hero3d(){
-const old=$('#gl'),box=$('#kc');if(!old||!box)return;
-old.style.display='block';
-const cv=document.createElement('canvas');cv.id='gl3d';cv.setAttribute('aria-label','Realistic 3D Mavern Studio keychain with chrome rings, chains and branded charms');cv.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none';box.appendChild(cv);
-const im=document.createElement('script');im.type='importmap';im.textContent=JSON.stringify({imports:{three:'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js'}});document.head.appendChild(im);
-const boot=document.createElement('script');boot.type='module';boot.onerror=()=>{console.error('Mavern 3D module failed to load');const fallback=document.getElementById('gl');if(fallback)fallback.style.display='block';const cv=document.getElementById('gl3d');if(cv)cv.style.display='none';};boot.textContent=String.raw`
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
-import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/environments/RoomEnvironment.js';
-const canvas=document.getElementById('gl3d'),host=document.getElementById('kc');
-try{
-const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
-document.getElementById('gl').style.display='none';
-renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;
-const scene=new THREE.Scene();scene.environment=new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(),.04).texture;
-scene.add(new THREE.HemisphereLight(0xffffff,0x222633,2.1));
-const key=new THREE.DirectionalLight(0xffffff,4.5);key.position.set(-180,240,300);scene.add(key);
-const rim=new THREE.DirectionalLight(0xdce8ff,3.8);rim.position.set(220,80,-80);scene.add(rim);
-const warm=new THREE.DirectionalLight(0xff6b28,2.4);warm.position.set(-240,-40,100);scene.add(warm);
-const camera=new THREE.OrthographicCamera(-220,220,260,-260,1,2000);camera.position.set(0,0,800);camera.lookAt(0,0,0);
-const root=new THREE.Group();scene.add(root);
-const chrome=new THREE.MeshStandardMaterial({color:0xdfe6ee,metalness:1,roughness:.12,envMapIntensity:2.2});
-const darkChrome=new THREE.MeshStandardMaterial({color:0x30343b,metalness:1,roughness:.19,envMapIntensity:2});
-const black=new THREE.MeshPhysicalMaterial({color:0x111216,metalness:.48,roughness:.22,clearcoat:1,clearcoatRoughness:.1});
-const orange=new THREE.MeshStandardMaterial({color:0xff4d12,metalness:.82,roughness:.19,envMapIntensity:2.3});
-const green=new THREE.MeshPhysicalMaterial({color:0x13df3f,metalness:.55,roughness:.17,clearcoat:1,clearcoatRoughness:.08});
-const pink=new THREE.MeshPhysicalMaterial({color:0xff12c8,metalness:.7,roughness:.16,clearcoat:1});
-const gold=new THREE.MeshStandardMaterial({color:0xd7b35a,metalness:1,roughness:.18});
-const mat=(color,metalness=.5,roughness=.25)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
-function tube(points,r,material,segments=100){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,segments,r,12,false),material);root.add(mesh);return mesh}
-function ring(x,y,rx,ry,tubeR,material,rot=0,z=0){const g=new THREE.Mesh(new THREE.TorusGeometry(rx,tubeR,18,120),material);g.scale.set(1,ry/rx,1);g.position.set(x,y,z);g.rotation.z=rot;root.add(g);return g}
-function chain(x,yTop,yEnd,z=0,spacing=13){for(let y=yTop;y>yEnd;y-=spacing){const link=new THREE.Mesh(new THREE.TorusGeometry(4.6,1.15,12,28),chrome);link.position.set(x,y,z);link.rotation.set(0,0,((Math.round((yTop-y)/spacing)%2)?Math.PI/2:0));link.scale.set(.76,1.5,1);root.add(link);const inner=new THREE.Mesh(new THREE.TorusGeometry(3.7,.38,10,24),darkChrome);inner.position.set(x,y,z+1.8);inner.rotation.copy(link.rotation);inner.scale.copy(link.scale);root.add(inner)}}
-function labelTexture(title,subtitle='',accent='#b8ff9f'){const c=document.createElement('canvas');c.width=512;c.height=320;const g=c.getContext('2d');g.fillStyle='#111216';g.beginPath();g.roundRect(10,10,492,300,52);g.fill();g.strokeStyle='rgba(255,255,255,.48)';g.lineWidth=7;g.stroke();g.fillStyle='#f6f5f1';g.textAlign='center';g.textBaseline='middle';g.font='900 65px Arial,sans-serif';g.fillText(title,256,139);g.fillStyle=accent;g.fillRect(155,207,202,7);if(subtitle){g.fillStyle='#b9bbc0';g.font='600 23px Arial,sans-serif';g.fillText(subtitle,256,250)}const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;return tex}
-function roundedCharm(x,y,w,h,z,texture,material=black,rotation=0){const shape=new THREE.Shape();const r=16;shape.moveTo(-w/2+r,-h/2);shape.lineTo(w/2-r,-h/2);shape.quadraticCurveTo(w/2,-h/2,w/2,-h/2+r);shape.lineTo(w/2,h/2-r);shape.quadraticCurveTo(w/2,h/2,w/2-r,h/2);shape.lineTo(-w/2+r,h/2);shape.quadraticCurveTo(-w/2,h/2,-w/2,h/2-r);shape.lineTo(-w/2,-h/2+r);shape.quadraticCurveTo(-w/2,-h/2,-w/2+r,-h/2);const geo=new THREE.ExtrudeGeometry(shape,{depth:10,bevelEnabled:true,bevelSegments:4,steps:1,bevelSize:3,bevelThickness:3});geo.computeVertexNormals();const mesh=new THREE.Mesh(geo,material);mesh.position.set(x,y,z);mesh.rotation.z=rotation;root.add(mesh);if(texture){const plane=new THREE.Mesh(new THREE.PlaneGeometry(w-18,h-18),new THREE.MeshBasicMaterial({map:texture,transparent:true}));plane.position.set(x,y,z+16);plane.rotation.z=rotation;root.add(plane)}return mesh}
-const mav=labelTexture('MAVERN','INDEPENDENT DIGITAL STUDIO'),studio=labelTexture('STUDIO','DESIGN • DEVELOPMENT','#b8ff9f');
-/* Oversized polished carabiner and nested split rings */
-tube([[-130,135,5],[-158,160,5],[-164,195,5],[-145,220,5],[-116,220,5],[-94,195,5],[-81,157,5],[-63,144,5]],8,orange,110);
-tube([[-100,208,15],[-88,217,15],[-80,207,15]],4,chrome,32);
-ring(-2,147,86,60,5.5,chrome,-.12,2);
-ring(8,141,65,50,4.5,darkChrome,.25,5);
-ring(14,144,54,42,3.8,chrome,-.22,8);
-/* Six separate hanging chains with real alternating interlocked links */
-const xs=[-100,-62,-22,20,58,92],ends=[-108,-110,-32,-69,-123,-57];
-xs.forEach((x,i)=>chain(x,136,ends[i],12-i*2,12));
-/* black logo tag with metallic border */
-ring(-100,-112,9,12,2.5,chrome,0,18);
-roundedCharm(-100,-153,96,88,20,mav,black,-.08);
-/* Oversized chrome capsule / buckle charm */
-const buckle=new THREE.Mesh(new THREE.CylinderGeometry(25,25,72,64,1,false),chrome);buckle.rotation.z=.27;buckle.rotation.x=Math.PI/2;buckle.position.set(-35,-151,30);root.add(buckle);
-const buckleFace=new THREE.Mesh(new THREE.CircleGeometry(23,64),mat(0xe8edf1,1,.1));buckleFace.position.set(-35,-151,68);root.add(buckleFace);
-const hole=new THREE.Mesh(new THREE.TorusGeometry(7,3,12,40),darkChrome);hole.position.set(-35,-151,72);root.add(hole);
-/* sculpted silver key, cut-like notches and round bow */
-ring(18,-3,9,12,2.8,chrome,0,22);
-const keyS=new THREE.Shape();keyS.moveTo(-7,0);keyS.lineTo(7,0);keyS.lineTo(7,-92);keyS.lineTo(19,-92);keyS.lineTo(19,-105);keyS.lineTo(8,-105);keyS.lineTo(8,-118);keyS.lineTo(18,-118);keyS.lineTo(18,-131);keyS.lineTo(-7,-131);keyS.closePath();
-const keyMesh=new THREE.Mesh(new THREE.ExtrudeGeometry(keyS,{depth:8,bevelEnabled:true,bevelSegments:3,bevelSize:2,bevelThickness:2}),chrome);keyMesh.position.set(19,-28,24);keyMesh.rotation.z=-.14;root.add(keyMesh);
-ring(20,-34,11,12,3.2,chrome,0,28);
-/* glossy pink medallion, green word charm, and small gold-backed tag */
-const med=new THREE.Mesh(new THREE.CylinderGeometry(26,26,15,64),pink);med.rotation.x=Math.PI/2;med.rotation.z=.12;med.position.set(65,-100,28);root.add(med);
-const medFace=new THREE.Mesh(new THREE.CircleGeometry(22,64),mat(0xf329d0,.65,.14));medFace.position.set(65,-100,38);root.add(medFace);
-const greenTag=roundedCharm(96,-119,42,114,30,studio,green,-.1);
-ring(96,-58,7,9,2.3,chrome,0,30);
-/* small enamel secondary brand plate */
-roundedCharm(45,-147,74,42,16,studio,gold,.05);
-/* little rivets and connector loops */
-[[-100,-107],[-62,-111],[-22,-122],[20,-128],[58,-108],[92,-111]].forEach(([x,y])=>ring(x,y,5,7,1.8,chrome,.1,18));
-function resize(){const w=host.clientWidth||390,h=host.clientHeight||450;renderer.setSize(w,h,false);camera.left=-w/2;camera.right=w/2;camera.top=h/2;camera.bottom=-h/2;camera.updateProjectionMatrix();const s=Math.min(w/430,h/455);root.scale.setScalar(s*.78);root.position.set(0,-Math.min(58,h*.14),0)}
-const observer=new ResizeObserver(resize);observer.observe(host);resize();
-let last=0;function animate(t){requestAnimationFrame(animate);const dt=Math.min(.04,(t-last)/1000||.016);last=t;root.rotation.y=Math.sin(t*.00035)*.025;root.rotation.z=Math.sin(t*.00022)*.012;renderer.render(scene,camera)}animate(0);
-}catch(e){console.error('Mavern 3D hero failed:',e);canvas.style.display='none';oldFallback();}
-function oldFallback(){document.getElementById('gl').style.display='block';}
-`;
-document.body.appendChild(boot);
+const canvas=$('#gl');
+if(!canvas)return;
+const ctx=canvas.getContext('2d');
+if(!ctx)return;
+const host=$('#kc');
+let w=0,h=0,dpr=1,t=0,raf=0;
+const fit=()=>{const r=host.getBoundingClientRect();w=Math.max(1,r.width);h=Math.max(1,r.height);dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width='100%';canvas.style.height='100%';ctx.setTransform(dpr,0,0,dpr,0,0);};
+function path(points){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));}
+function metalStroke(points,width=3,color='#dfe5ed'){path(points);ctx.lineWidth=width;ctx.strokeStyle=color;ctx.lineJoin='round';ctx.lineCap='round';ctx.stroke();}
+function ellipse(x,y,rx,ry,angle=0,width=4,stroke='#e6e9ed',fill=null){ctx.beginPath();ctx.ellipse(x,y,rx,ry,angle,0,Math.PI*2);if(fill){ctx.fillStyle=fill;ctx.fill()}ctx.lineWidth=width;ctx.strokeStyle=stroke;ctx.stroke();}
+function rounded(x,y,ww,hh,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,ww,hh,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.lineWidth=2.4;ctx.strokeStyle=stroke;ctx.stroke();}}
+function text(txt,x,y,size,color,font='700'){ctx.fillStyle=color;ctx.font=font+' '+size+'px Arial,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,x,y);}
+function chain(x,y1,y2,scale=1){let i=0;for(let y=y1;y<y2;y+=10*scale){ctx.save();ctx.translate(x,y);ctx.rotate(i%2?Math.PI/2:.12);const grad=ctx.createLinearGradient(-4*scale,0,4*scale,0);grad.addColorStop(0,'#343940');grad.addColorStop(.25,'#f8fbff');grad.addColorStop(.48,'#8e969f');grad.addColorStop(.72,'#fff');grad.addColorStop(1,'#41464d');ctx.beginPath();ctx.ellipse(0,0,3.1*scale,5.5*scale,0,0,Math.PI*2);ctx.lineWidth=1.6*scale;ctx.strokeStyle=grad;ctx.stroke();ctx.restore();i++;}}
+function draw(now){
+t=now*.001;ctx.clearRect(0,0,w,h);
+const s=Math.min(w/390,h/430,1.1),cx=w*.5,top=h*.10;
+ctx.save();ctx.translate(cx,top);ctx.scale(s,s);
+/* Chrome split ring and warm orange carabiner */
+const chrome=ctx.createLinearGradient(-100,-30,100,40);chrome.addColorStop(0,'#353940');chrome.addColorStop(.16,'#f9fbff');chrome.addColorStop(.32,'#7e8790');chrome.addColorStop(.52,'#fff');chrome.addColorStop(.72,'#a3abb4');chrome.addColorStop(1,'#272c33');
+ctx.save();ctx.rotate(-.22);ellipse(-96,8,27,53,.38,7,chrome);ctx.restore();
+ctx.save();ctx.rotate(-.18);metalStroke([[-118,-60],[-140,-85],[-150,-115],[-136,-135],[-113,-135],[-98,-112],[-84,-82],[-67,-70]],7,'#f25b24');metalStroke([[-118,-60],[-140,-85],[-150,-115],[-136,-135],[-113,-135],[-98,-112],[-84,-82],[-67,-70]],2,'#ffb17d');ctx.restore();
+ellipse(0,-92,73,48,-.05,5,chrome);ellipse(8,-95,57,38,.16,3.5,'#6b727b');
+/* six linked hanging chains */
+const xs=[-92,-55,-18,19,56,91],ys=[68,112,98,127,88,111];
+xs.forEach((x,i)=>chain(x,-49,ys[i],1));
+/* hanging logo fob */
+ctx.save();ctx.translate(-78,83);ctx.rotate(-.08);rounded(-39,-1,78,65,12,'#101115',chrome);rounded(-32,6,64,51,8,'#17191d','#858b93');text('MAVERN',0,28,12,'#f7f6f2','800');text('STUDIO',0,43,5.5,'#b8ff9f','700');ctx.restore();
+/* chrome buckle charm */
+ctx.save();ctx.translate(-31,105);ctx.rotate(.32);const buckle=ctx.createLinearGradient(-22,0,22,0);buckle.addColorStop(0,'#3b4148');buckle.addColorStop(.2,'#fdfefe');buckle.addColorStop(.48,'#777f88');buckle.addColorStop(.7,'#fff');buckle.addColorStop(1,'#30343a');rounded(-17,-30,34,62,9,buckle,'#e9edf2');ctx.restore();
+/* dark round key bow and long notched silver key */
+ellipse(18,77,24,29,.1,3,chrome,'#202227');ctx.save();ctx.translate(25,106);ctx.rotate(.18);metalStroke([[-4,-22],[4,-22],[4,43],[17,43],[17,54],[5,54],[5,67],[16,67],[16,78],[-4,78]],7,chrome);metalStroke([[-4,-22],[4,-22],[4,43],[17,43],[17,54],[5,54],[5,67],[16,67],[16,78],[-4,78]],2,'#fff');ctx.restore();
+/* pink enamel medallion */
+const pink=ctx.createLinearGradient(45,0,90,0);pink.addColorStop(0,'#86116d');pink.addColorStop(.25,'#ff48e1');pink.addColorStop(.52,'#ff9af0');pink.addColorStop(.76,'#c41da7');pink.addColorStop(1,'#5d164e');ellipse(62,98,18,34,.1,2,pink,pink);
+/* vivid green embossed brand charm */
+ctx.save();ctx.translate(95,89);ctx.rotate(-.12);const green=ctx.createLinearGradient(-20,0,20,0);green.addColorStop(0,'#15772b');green.addColorStop(.25,'#8bff9e');green.addColorStop(.5,'#19d83c');green.addColorStop(.78,'#56ff71');green.addColorStop(1,'#09691f');rounded(-18,-31,36,78,10,green,'#d8ffe0');rounded(-10,-23,20,62,4,'#101317','#1b4b29');text('M',0,-4,12,'#f4fff4','900');text('V',0,11,10,'#b7ffbd','900');text('N',0,24,8,'#fff','900');ctx.restore();
+/* connector eyelets in front of chains */
+xs.forEach((x,i)=>ellipse(x,ys[i]-3,4,5,.1,1.5,chrome));
+ctx.restore();
+raf=requestAnimationFrame(draw);
 }
+const observer=new ResizeObserver(fit);observer.observe(host);fit();cancelAnimationFrame(raf);raf=requestAnimationFrame(draw);
+}
+
 hero3d();
 
 addEventListener('resize',()=>RIGS.forEach(r=>r.hero&&size(r)));
