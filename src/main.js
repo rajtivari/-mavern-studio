@@ -143,7 +143,7 @@ ring(-2,182,86,60,5.5,chrome,-.12,2);
 ring(8,176,65,50,4.5,darkChrome,.25,5);
 ring(14,179,54,42,3.8,chrome,-.22,8);
 /* Six separate hanging chains with real alternating interlocked links */
-const xs=[-100,-62,-22,20,58,92],ends=[-115,-165,-145,-178,-132,-155];
+const xs=[-100,-62,-22,20,58,92],ends=[-108,-110,-32,-69,-123,-57];
 xs.forEach((x,i)=>chain(x,166,ends[i]+52,12-i*2,12));
 /* black logo tag with metallic border */
 ring(-100,-112,9,12,2.5,chrome,0,18);
