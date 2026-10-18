@@ -108,7 +108,7 @@ function hero3d(){
 const old=$('#gl'),box=$('#kc');if(!old||!box)return;
 old.style.display='none';
 const cv=document.createElement('canvas');cv.id='gl3d';cv.setAttribute('aria-label','Realistic 3D Mavern Studio keychain with chrome rings, chains and branded charms');cv.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none';box.appendChild(cv);
-const boot=document.createElement('script');boot.type='module';boot.textContent=String.raw\`
+const boot=document.createElement('script');boot.type='module';boot.textContent=String.raw`
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
 import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/environments/RoomEnvironment.js';
 const canvas=document.getElementById('gl3d'),host=document.getElementById('kc');
@@ -171,7 +171,7 @@ const observer=new ResizeObserver(resize);observer.observe(host);resize();
 let last=0;function animate(t){requestAnimationFrame(animate);const dt=Math.min(.04,(t-last)/1000||.016);last=t;root.rotation.y=Math.sin(t*.00035)*.025;root.rotation.z=Math.sin(t*.00022)*.012;renderer.render(scene,camera)}animate(0);
 }catch(e){console.error('Mavern 3D hero failed:',e);canvas.style.display='none';oldFallback();}
 function oldFallback(){document.getElementById('gl').style.display='block';}
-\`;
+`;
 document.body.appendChild(boot);
 }
 hero3d();
