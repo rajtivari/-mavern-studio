@@ -108,7 +108,7 @@ function hero3d(){
 const cv=$('#gl'),box=$('#kc'),gl=cv.getContext('webgl',{antialias:true,alpha:true,premultipliedAlpha:false});if(!gl){box.style.display='none';return}
 const VS=`attribute vec3 aP,aN;attribute vec2 aU;uniform mat4 uVP,uM;varying vec3 vN,vW;varying vec2 vU;void main(){vec4 w=uM*vec4(aP,1.);gl_Position=uVP*w;vN=mat3(uM)*aN;vW=w.xyz;vU=aU;}`;
 const FS=`precision mediump float;varying vec3 vN,vW;varying vec2 vU;uniform vec3 uC;uniform float uK,uT,uZ;uniform sampler2D uS;
-vec3 env(vec3 r){float y=r.y*.5+.5;vec3 c=mix(vec3(.20,.22,.26),vec3(.72,.74,.78),smoothstep(.48,.92,y));c=mix(c,vec3(.08,.09,.11),smoothstep(.48,.12,y)*.88);c*=1.-.52*exp(-pow((y-.5)*8.,2.));c+=.22*smoothstep(.62,.96,r.x)+.18*smoothstep(.66,.98,-r.x);c+=.34*pow(max(dot(r,normalize(vec3(-.35,.6,.72))),0.),28.);return c;}
+vec3 env(vec3 r){float y=r.y*.5+.5;vec3 c=vec3(.055,.06,.075);c=mix(c,vec3(.82,.85,.9),smoothstep(.70,.94,y));c=mix(c,vec3(.025,.03,.04),smoothstep(.18,.02,y));float strip=pow(max(0.,1.-abs(r.x+.32)*9.),7.);float strip2=pow(max(0.,1.-abs(r.x-.62)*13.),9.);float top=pow(max(0.,dot(r,normalize(vec3(-.35,.8,.48))),0.),32.);c+=vec3(.92,.96,1.)*(strip*.9+strip2*.72+top*.45);c+=vec3(.18,.2,.24)*pow(max(dot(r,normalize(vec3(.2,.25,.95))),0.),18.);return c;}
 void main(){vec3 n=normalize(vN),v=normalize(vec3(0.,0.,uZ)-vW);
 if(uT>.5){if(dot(n,v)<0.)discard;gl_FragColor=texture2D(uS,vU);return;}
 vec3 r=reflect(-v,n),L=normalize(vec3(-.35,.6,.72));float f=pow(1.-max(dot(n,v),0.),3.);
@@ -139,10 +139,10 @@ key:[eyelet(),body(lathe([[11,5],[27,5],[30,4],[31,2],[31,-2],[30,-4],[27,-5],[1
 coin:[eyelet(),body(lathe([[0,9],[16,9],[30,9],[36,7],[38,3],[38,-3],[36,-7],[30,-9],[16,-9],[0,-9]]),[.78,.08,.68],.24,0,-52,0,1.5708)],
 plate:[eyelet(),body(rbox(44,140,18,9),[.04,.55,.08],.18,0,-82),dec(quad(36,108),'V',0,-82,9.5)],
 code:[eyelet(),body(rbox(84,60,18,10),[1,.82,.2],.4,0,-44),dec(quad(62,31),'C',0,-44,9.5)]};
-const LG=oval(4.8,12.6,1.9,28,8),CAR=oval(22,64,8.5,40,10),CLA=rbox(16,30,12,5);let RG;
+const LG=oval(4.8,12.6,2.35,32,10),CAR=oval(22,64,7.2,48,12),CLA=rbox(16,30,12,5);let RG;
 const SP=[{off:-.82,len:205,c:{t:'m',cw:116}},{off:-.48,len:265,c:{t:'can',cw:84}},{off:-.12,len:240,c:{t:'key',cw:70}},{off:.20,len:285,c:{t:'coin',cw:88}},{off:.52,len:205,c:{t:'plate',cw:66}},{off:.82,len:245,c:{t:'code',cw:92}}],ZS=[22,-52,54,-28,68,-66];
 const r={cv,hero:true,vis:true,drop:RMM?0:-320,S:SP.map(d=>({d,P:[],ph:(Math.random()-.5)*1.8,pv:0}))};let VP,camZ;
-function build(){size(r);camZ=r.H/2/Math.tan(.2618);const f=1/Math.tan(.2618),a=r.W/r.H,P=new Float32Array(16);P[0]=f/a;P[5]=f;P[10]=-(4000+10)/3990;P[11]=-1;P[14]=-2*4000*10/3990;VP=mul(P,Tm(0,0,-camZ));gl.viewport(0,0,cv.width,cv.height);RG=oval(105,91,6.5,72,10)}
+function build(){size(r);camZ=r.H/2/Math.tan(.2618);const f=1/Math.tan(.2618),a=r.W/r.H,P=new Float32Array(16);P[0]=f/a;P[5]=f;P[10]=-(4000+10)/3990;P[11]=-1;P[14]=-2*4000*10/3990;VP=mul(P,Tm(0,0,-camZ));gl.viewport(0,0,cv.width,cv.height);RG=oval(105,91,4.4,88,12)}
 build();new IntersectionObserver(e=>r.vis=e[0].isIntersecting).observe(box);addEventListener('resize',build);
 function render(t){gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.uniformMatrix4fv(UF.uVP,false,VP);gl.uniform1f(UF.uZ,camZ);gl.uniform1i(UF.uS,0);
 const{W,H,sc}=r,wx=x=>x-W/2,wy=y=>H/2-y,dr=(g,M,c,k,tx)=>{gl.bindBuffer(gl.ARRAY_BUFFER,g.p);gl.vertexAttribPointer(AL[0],3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,g.n);gl.vertexAttribPointer(AL[1],3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,g.u);gl.vertexAttribPointer(AL[2],2,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,g.i);gl.uniformMatrix4fv(UF.uM,false,M);gl.uniform3fv(UF.uC,c);gl.uniform1f(UF.uK,k);gl.uniform1f(UF.uT,tx?1:0);if(tx)gl.bindTexture(gl.TEXTURE_2D,TEX[tx]);gl.drawElements(gl.TRIANGLES,g.c,gl.UNSIGNED_SHORT,0)};
