@@ -108,11 +108,11 @@ function hero3d(){
 const cv=$('#gl'),box=$('#kc'),gl=cv.getContext('webgl',{antialias:true,alpha:true,premultipliedAlpha:false});if(!gl){box.style.display='none';return}
 const VS=`attribute vec3 aP,aN;attribute vec2 aU;uniform mat4 uVP,uM;varying vec3 vN,vW;varying vec2 vU;void main(){vec4 w=uM*vec4(aP,1.);gl_Position=uVP*w;vN=mat3(uM)*aN;vW=w.xyz;vU=aU;}`;
 const FS=`precision mediump float;varying vec3 vN,vW;varying vec2 vU;uniform vec3 uC;uniform float uK,uT,uZ;uniform sampler2D uS;
-vec3 env(vec3 r){float y=r.y*.5+.5;vec3 c=mix(vec3(.55,.58,.63),vec3(.99,1.,1.),smoothstep(.5,.95,y));c=mix(c,vec3(.17,.19,.23),smoothstep(.5,.14,y)*.9);c*=1.-.78*exp(-pow((y-.5)*9.,2.));c+=.55*smoothstep(.6,.95,r.x)+.4*smoothstep(.65,.98,-r.x);c+=.9*pow(max(dot(r,normalize(vec3(-.35,.6,.72))),0.),40.);return c;}
+vec3 env(vec3 r){float y=r.y*.5+.5;vec3 c=mix(vec3(.20,.22,.26),vec3(.72,.74,.78),smoothstep(.48,.92,y));c=mix(c,vec3(.08,.09,.11),smoothstep(.48,.12,y)*.88);c*=1.-.52*exp(-pow((y-.5)*8.,2.));c+=.22*smoothstep(.62,.96,r.x)+.18*smoothstep(.66,.98,-r.x);c+=.34*pow(max(dot(r,normalize(vec3(-.35,.6,.72))),0.),28.);return c;}
 void main(){vec3 n=normalize(vN),v=normalize(vec3(0.,0.,uZ)-vW);
 if(uT>.5){if(dot(n,v)<0.)discard;gl_FragColor=texture2D(uS,vU);return;}
 vec3 r=reflect(-v,n),L=normalize(vec3(-.35,.6,.72));float f=pow(1.-max(dot(n,v),0.),3.);
-vec3 pl=uC*(.3+.7*max(dot(n,L),0.))+.65*pow(max(dot(r,L),0.),30.)+.22*f;gl_FragColor=vec4(mix(pl,env(r)*uC,uK),1.);}`;
+vec3 pl=uC*(.48+.52*max(dot(n,L),0.))+.22*pow(max(dot(r,L),0.),24.)+.12*f;gl_FragColor=vec4(mix(pl,env(r)*uC,uK*.72),1.);}`;
 const sh=(t,c)=>{const o=gl.createShader(t);gl.shaderSource(o,c);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))console.warn(gl.getShaderInfoLog(o));return o},pr=gl.createProgram();
 gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);gl.useProgram(pr);
 const AL=['aP','aN','aU'].map(k=>{const l=gl.getAttribLocation(pr,k);gl.enableVertexAttribArray(l);return l}),UF={};['uVP','uM','uC','uK','uT','uZ','uS'].forEach(k=>UF[k]=gl.getUniformLocation(pr,k));
@@ -128,16 +128,16 @@ const mul=(a,b)=>{const o=new Float32Array(16);for(let i=0;i<4;i++)for(let j=0;j
 const Tm=(x,y,z)=>{const m=I4();m[12]=x;m[13]=y;m[14]=z;return m},Sm=k=>{const m=I4();m[0]=m[5]=m[10]=k;return m};
 const Rx=a=>{const c=Math.cos(a),s=Math.sin(a),m=I4();m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m},Ry=a=>{const c=Math.cos(a),s=Math.sin(a),m=I4();m[0]=c;m[2]=-s;m[8]=s;m[10]=c;return m},Rz=a=>{const c=Math.cos(a),s=Math.sin(a),m=I4();m[0]=c;m[1]=s;m[4]=-s;m[5]=c;return m};
 const TEX={},dTex=(w,h,fn)=>{const c=document.createElement('canvas');c.width=w;c.height=h;fn(c.getContext('2d'),w,h);const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);[[gl.TEXTURE_MIN_FILTER,gl.LINEAR],[gl.TEXTURE_MAG_FILTER,gl.LINEAR],[gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE],[gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE]].forEach(a=>gl.texParameteri(gl.TEXTURE_2D,a[0],a[1]));return t};
-function mkTex(){TEX.M=dTex(256,256,(g,w,h)=>{g.fillStyle='#cfcfd2';g.beginPath();rr(g,0,0,w,h,34);g.fill();g.fillStyle='#141416';g.font=`800 190px ${FF}`;g.textAlign='center';g.textBaseline='middle';g.fillText('M',w/2,h/2+10)});
-TEX.V=dTex(128,384,(g,w,h)=>{g.translate(w/2,h/2);g.rotate(1.5708);g.fillStyle='#EAFFE6';g.font=`800 76px ${FF}`;g.textAlign='center';g.textBaseline='middle';g.fillText('Mavern',0,4)});
+function mkTex(){TEX.M=dTex(256,256,(g,w,h)=>{g.fillStyle='#cfcfd2';g.beginPath();rr(g,0,0,w,h,34);g.fill();g.fillStyle='#141416';g.font=`900 148px ${FF}`;g.textAlign='center';g.textBaseline='middle';g.fillText('M',w/2,h/2-8);g.font='700 25px system-ui,sans-serif';g.fillText('MAVERN',w/2,h*.82)});
+TEX.V=dTex(128,384,(g,w,h)=>{g.translate(w/2,h/2);g.rotate(1.5708);g.fillStyle='#EAFFE6';g.font='900 70px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('MAVERN',0,4)});
 TEX.C=dTex(256,128,(g,w,h)=>{g.fillStyle='#141416';g.font=`800 96px ${FF}`;g.textAlign='center';g.textBaseline='middle';g.fillText('</>',w/2,h/2+6)})}
 mkTex();document.fonts&&document.fonts.ready.then(mkTex);
-const CR=[1,1,1],eyelet=()=>({g:oval(7,9,2.3,20,8),c:CR,k:1,m:Tm(0,-6,0)}),body=(g,c,k,x,y,z=0,rx=0,rz=0)=>({g,c,k,m:mul(Tm(x,y,z),mul(Rz(rz),Rx(rx)))}),dec=(g,t,x,y,z)=>({g,c:CR,k:0,t,m:Tm(x,y,z)});
-const CH={m:[eyelet(),body(rbox(96,96,26,13),[.05,.05,.06],.35,0,-62),dec(quad(68,68),'M',0,-62,13.6)],
-can:[eyelet(),body(lathe([[0,44],[18,44],[30,44],[34,41],[35,36],[35,-36],[34,-41],[30,-44],[18,-44],[0,-44]]),CR,1,0,-60,0,0,.1)],
+const CR=[.82,.84,.88],eyelet=()=>({g:oval(7,9,2.3,20,8),c:CR,k:.82,m:Tm(0,-6,0)}),body=(g,c,k,x,y,z=0,rx=0,rz=0)=>({g,c,k,m:mul(Tm(x,y,z),mul(Rz(rz),Rx(rx)))}),dec=(g,t,x,y,z)=>({g,c:CR,k:0,t,m:Tm(x,y,z)});
+const CH={m:[eyelet(),body(rbox(96,96,26,13),[.025,.028,.032],.12,0,-62),dec(quad(78,78),'M',0,-62,13.6)],
+can:[eyelet(),body(lathe([[0,44],[18,44],[30,44],[34,41],[35,36],[35,-36],[34,-41],[30,-44],[18,-44],[0,-44]]),[.66,.68,.72],.82,0,-60,0,0,.1)],
 key:[eyelet(),body(lathe([[11,5],[27,5],[30,4],[31,2],[31,-2],[30,-4],[27,-5],[11,-5],[9,-3],[8.5,0],[9,3],[11,5]]),CR,1,0,-42,0,1.5708),body(rbox(15,86,9,3),CR,1,0,-112),body(rbox(13,8,9,2),CR,1,11,-136),body(rbox(13,8,9,2),CR,1,11,-122),body(rbox(13,8,9,2),CR,1,11,-108)],
-coin:[eyelet(),body(lathe([[0,9],[16,9],[30,9],[36,7],[38,3],[38,-3],[36,-7],[30,-9],[16,-9],[0,-9]]),[.9,.2,.9],.5,0,-52,0,1.5708)],
-plate:[eyelet(),body(rbox(44,140,18,9),[.08,.72,.12],.4,0,-82),dec(quad(36,108),'V',0,-82,9.5)],
+coin:[eyelet(),body(lathe([[0,9],[16,9],[30,9],[36,7],[38,3],[38,-3],[36,-7],[30,-9],[16,-9],[0,-9]]),[.78,.08,.68],.24,0,-52,0,1.5708)],
+plate:[eyelet(),body(rbox(44,140,18,9),[.04,.55,.08],.18,0,-82),dec(quad(36,108),'V',0,-82,9.5)],
 code:[eyelet(),body(rbox(84,60,18,10),[1,.82,.2],.4,0,-44),dec(quad(62,31),'C',0,-44,9.5)]};
 const LG=oval(4.8,12.6,1.9,28,8),CAR=oval(22,64,8.5,40,10),CLA=rbox(16,30,12,5);let RG;
 const SP=[{off:-1.02,len:220,c:{t:'m',cw:100}},{off:-.72,len:300,c:{t:'can',cw:72}},{off:-.28,len:250,c:{t:'key',cw:64}},{off:.18,len:325,c:{t:'coin',cw:80}},{off:.62,len:210,c:{t:'plate',cw:50}},{off:.98,len:275,c:{t:'code',cw:84}}],ZS=[18,-48,48,-24,62,-62];
