@@ -1,0 +1,12 @@
+import {header,hero,philosophy,services,projects,pricing,processSection,faq,contact,footer} from './components.js';
+const sections={'site-header':header,hero,philosophy,services,projects,pricing,process:processSection,faq,contact,'site-footer':footer};
+for(const [id,render] of Object.entries(sections)){const node=document.getElementById(id);if(node)node.innerHTML=render()}
+const dialog=document.querySelector('#project-dialog'),menu=document.querySelector('.mobile-nav'),toggle=document.querySelector('.menu-toggle');
+document.querySelectorAll('[data-open-dialog]').forEach(btn=>btn.addEventListener('click',e=>{e.preventDefault();const val=btn.dataset.service;if(val)dialog.querySelector('[name="service"]').value=val;dialog.showModal()}));
+document.querySelector('[data-close-dialog]').addEventListener('click',()=>dialog.close());
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+toggle.addEventListener('click',()=>{const open=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(!a.hasAttribute('data-open-dialog'))menu.classList.remove('open')}));
+document.querySelectorAll('.faq-question').forEach(btn=>btn.addEventListener('click',()=>btn.setAttribute('aria-expanded',String(btn.getAttribute('aria-expanded')!=='true'))));
+document.querySelector('#project-form').addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.currentTarget);const subject=encodeURIComponent('Mavern Studio project enquiry — '+d.get('name'));const body=encodeURIComponent('Name: '+d.get('name')+'\nEmail: '+d.get('email')+'\nService: '+d.get('service')+'\n\nNotes:\n'+(d.get('notes')||'Not provided'));location.href='mailto:tivariraj424@gmail.com?subject='+subject+'&body='+body});
+if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
