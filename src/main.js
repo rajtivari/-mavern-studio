@@ -134,19 +134,19 @@ const gold=new THREE.MeshStandardMaterial({color:0xd7b35a,metalness:1,roughness:
 const mat=(color,metalness=.5,roughness=.25)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
 function tube(points,r,material,segments=100){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));const mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,segments,r,12,false),material);root.add(mesh);return mesh}
 function ring(x,y,rx,ry,tubeR,material,rot=0,z=0){const g=new THREE.Mesh(new THREE.TorusGeometry(rx,tubeR,18,120),material);g.scale.set(1,ry/rx,1);g.position.set(x,y,z);g.rotation.z=rot;root.add(g);return g}
-function chain(x,yTop,yEnd,z=0,spacing=13){for(let y=yTop;y>yEnd;y-=spacing){const link=new THREE.Mesh(new THREE.TorusGeometry(4.2,1.45,10,22),chrome);link.position.set(x,y,z);link.rotation.set(Math.PI/2,0,((Math.round((yTop-y)/spacing)%2)?Math.PI/2:0));link.scale.set(.76,1.5,1);root.add(link);const inner=new THREE.Mesh(new THREE.TorusGeometry(3.5,.55,8,18),darkChrome);inner.position.copy(link.position);inner.rotation.copy(link.rotation);inner.scale.copy(link.scale);root.add(inner)}}
+function chain(x,yTop,yEnd,z=0,spacing=13){for(let y=yTop;y>yEnd;y-=spacing){const link=new THREE.Mesh(new THREE.TorusGeometry(4.2,1.45,10,22),chrome);link.position.set(x,y,z);link.rotation.set(0,0,((Math.round((yTop-y)/spacing)%2)?Math.PI/2:0));link.scale.set(.76,1.5,1);root.add(link);const inner=new THREE.Mesh(new THREE.TorusGeometry(3.5,.55,8,18),darkChrome);inner.position.set(x,y,z+1.8);inner.rotation.copy(link.rotation);inner.scale.copy(link.scale);root.add(inner)}}
 function labelTexture(title,subtitle='',accent='#b8ff9f'){const c=document.createElement('canvas');c.width=512;c.height=320;const g=c.getContext('2d');g.fillStyle='#111216';g.beginPath();g.roundRect(10,10,492,300,52);g.fill();g.strokeStyle='rgba(255,255,255,.48)';g.lineWidth=7;g.stroke();g.fillStyle='#f6f5f1';g.textAlign='center';g.textBaseline='middle';g.font='900 65px Arial,sans-serif';g.fillText(title,256,139);g.fillStyle=accent;g.fillRect(155,207,202,7);if(subtitle){g.fillStyle='#b9bbc0';g.font='600 23px Arial,sans-serif';g.fillText(subtitle,256,250)}const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;return tex}
 function roundedCharm(x,y,w,h,z,texture,material=black,rotation=0){const shape=new THREE.Shape();const r=16;shape.moveTo(-w/2+r,-h/2);shape.lineTo(w/2-r,-h/2);shape.quadraticCurveTo(w/2,-h/2,w/2,-h/2+r);shape.lineTo(w/2,h/2-r);shape.quadraticCurveTo(w/2,h/2,w/2-r,h/2);shape.lineTo(-w/2+r,h/2);shape.quadraticCurveTo(-w/2,h/2,-w/2,h/2-r);shape.lineTo(-w/2,-h/2+r);shape.quadraticCurveTo(-w/2,-h/2,-w/2+r,-h/2);const geo=new THREE.ExtrudeGeometry(shape,{depth:10,bevelEnabled:true,bevelSegments:4,steps:1,bevelSize:3,bevelThickness:3});geo.computeVertexNormals();const mesh=new THREE.Mesh(geo,material);mesh.position.set(x,y,z);mesh.rotation.z=rotation;root.add(mesh);if(texture){const plane=new THREE.Mesh(new THREE.PlaneGeometry(w-18,h-18),new THREE.MeshBasicMaterial({map:texture,transparent:true}));plane.position.set(x,y,z+16);plane.rotation.z=rotation;root.add(plane)}return mesh}
 const mav=labelTexture('MAVERN','INDEPENDENT DIGITAL STUDIO'),studio=labelTexture('STUDIO','DESIGN • DEVELOPMENT','#b8ff9f');
 /* Oversized polished carabiner and nested split rings */
-tube([[-130,165,5],[-158,190,5],[-164,225,5],[-145,250,5],[-116,250,5],[-94,225,5],[-81,187,5],[-63,174,5]],8,orange,110);
-tube([[-100,238,15],[-88,247,15],[-80,237,15]],4,chrome,32);
-ring(-2,182,86,60,5.5,chrome,-.12,2);
-ring(8,176,65,50,4.5,darkChrome,.25,5);
-ring(14,179,54,42,3.8,chrome,-.22,8);
+tube([[-130,135,5],[-158,160,5],[-164,195,5],[-145,220,5],[-116,220,5],[-94,195,5],[-81,157,5],[-63,144,5]],8,orange,110);
+tube([[-100,208,15],[-88,217,15],[-80,207,15]],4,chrome,32);
+ring(-2,147,86,60,5.5,chrome,-.12,2);
+ring(8,141,65,50,4.5,darkChrome,.25,5);
+ring(14,144,54,42,3.8,chrome,-.22,8);
 /* Six separate hanging chains with real alternating interlocked links */
 const xs=[-100,-62,-22,20,58,92],ends=[-108,-110,-32,-69,-123,-57];
-xs.forEach((x,i)=>chain(x,166,ends[i]+52,12-i*2,12));
+xs.forEach((x,i)=>chain(x,136,ends[i],12-i*2,12));
 /* black logo tag with metallic border */
 ring(-100,-112,9,12,2.5,chrome,0,18);
 roundedCharm(-100,-153,96,88,20,mav,black,-.08);
