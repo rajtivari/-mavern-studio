@@ -106,7 +106,7 @@ const TG=(w,h,c,fg,label,fs,x)=>Object.assign({t:'tag',w,h,c,fg,label,fs,cw:w},x
 
 function hero3d(){
 const old=$('#gl'),box=$('#kc');if(!old||!box)return;
-old.style.display='none';
+old.style.display='block';
 const cv=document.createElement('canvas');cv.id='gl3d';cv.setAttribute('aria-label','Realistic 3D Mavern Studio keychain with chrome rings, chains and branded charms');cv.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none';box.appendChild(cv);
 const boot=document.createElement('script');boot.type='module';boot.textContent=String.raw`
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
@@ -114,6 +114,7 @@ import { RoomEnvironment } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/exam
 const canvas=document.getElementById('gl3d'),host=document.getElementById('kc');
 try{
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
+document.getElementById('gl').style.display='none';
 renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;
 const scene=new THREE.Scene();scene.environment=new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(),.04).texture;
 scene.add(new THREE.HemisphereLight(0xffffff,0x222633,2.1));
