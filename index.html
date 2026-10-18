@@ -1,3 +1,93 @@
-<!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f1f1f2"><meta name="description" content="Mavern Studio is an independent digital studio in Bengaluru building considered websites and digital experiences."><title>Mavern Studio® — Websites with intention</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Sansita+Swashed:wght@600;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="./src/styles.css"></head>
-<body><div id="site-header"></div><main id="main-content"><div id="hero"></div><div id="philosophy"></div><div id="services"></div><div id="projects"></div><div id="pricing"></div><div id="process"></div><div id="faq"></div><div id="contact"></div></main><div id="site-footer"></div><dialog id="project-dialog" class="project-dialog"><button class="dialog-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">LET'S MAKE SOMETHING GOOD</p><h2>Tell us what you're building.</h2><p class="muted">A few details are enough to start a useful conversation.</p><form id="project-form" class="form-stack"><label>Your name<input name="name" required autocomplete="name" placeholder="Name"></label><label>Email address<input name="email" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>What do you need?<select name="service"><option>Business website</option><option>Landing page</option><option>Portfolio</option><option>Custom web experience</option><option>Not sure yet</option></select></label><label>Project notes<textarea name="notes" rows="3" placeholder="Goals, timeline, or anything useful"></textarea></label><button class="button button-dark" type="submit">Prepare enquiry ↗</button></form></dialog><script type="module" src="./src/main.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mavern Studio® | Website design and development, Bengaluru</title>
+<meta name="description" content="Mavern Studio® is an independent digital studio in Bengaluru building modern websites, landing pages, and custom web experiences. Plans start at ₹8,000.">
+<meta name="theme-color" content="#F1F1F2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600;800&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./src/styles.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<header id="hd"><div class="wrap nav">
+ <a class="logo" href="#top" aria-label="Mavern Studio home">Mavern<sup>®</sup></a>
+ <nav aria-label="Main"><ul id="menu"><li><a href="#services">Services</a></li><li><a href="#work">Work</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#process">Process</a></li><li><a href="#faq">FAQ</a></li><li><a class="btn" href="#contact">Start a Project</a></li></ul></nav>
+ <button class="burger" id="bg" aria-label="Open menu" aria-expanded="false">☰</button></div></header>
+
+<main>
+<section class="hero" id="top">
+ <div class="kc" id="kc"><canvas id="gl" role="img" aria-label="Interactive keychain. Move your cursor or finger across it, or click, to swing the keys."></canvas></div>
+ <div class="wrap hc">
+  <span class="eyebrow rv">Independent digital studio · Bengaluru, India</span>
+  <h1 id="h1">Digital experiences, built to move businesses forward.</h1>
+  <p class="lead rv">We design and develop modern websites that make businesses look credible, communicate clearly, and turn visitors into customers.</p>
+  <p class="sub rv" style="--i:1">From your first landing page to a complete digital experience, we build with purpose, precision, and attention to detail.</p>
+  <div class="cta rv" style="--i:2"><a class="btn" href="#contact">Start a Project</a><a class="btn o" href="#work">Explore Our Work</a></div>
+  <p class="trust rv" style="--i:3">Thoughtful design. Clean development. Built around your goals.</p>
+ </div></section>
+<div class="mq" aria-hidden="true"><div><span>Website Design</span><b>✦</b><span>Web Development</span><b>✦</b><span>Landing Pages</span><b>✦</b><span>Custom Web Experiences</span><b>✦</b><span>Website Design</span><b>✦</b><span>Web Development</span><b>✦</b><span>Landing Pages</span><b>✦</b><span>Custom Web Experiences</span><b>✦</b></div></div>
+
+<section class="fly" id="fly"><div class="fst">
+<p class="stmt" id="stmt">Mavern Studio® is an independent studio where <i class="ico"></i>businesses get <i class="ico"></i>websites that look credible, load fast, and <i class="ico"></i>turn visitors into customers, from the first <i class="ico"></i>landing page up.</p>
+<div class="win" id="win"><div class="wb"><i></i><i></i><i></i><span>mavernstudio / what we build</span></div>
+<div class="wt"><div class="sl"><div class="sk"></div><span>Website Design</span></div><div class="sl"><div class="sk"></div><span>Web Development</span></div><div class="sl"><div class="sk"></div><span>Landing Pages</span></div><div class="sl"><div class="sk"></div><span>Custom Web Experiences</span></div></div></div>
+</div></section>
+<section id="services" style="padding-top:20px"><div class="wrap">
+ <div class="head"><h2 class="rv">What we build.</h2><p class="rv">Website design, web development, landing pages, and custom digital experiences.</p></div>
+ <div class="svc" id="svc"></div>
+</div></section>
+
+<section id="work" style="padding-top:20px"><div class="wrap">
+ <div class="head"><h2 class="rv">Selected work.</h2><p class="rv">Projects designed and built by Raj Tivari. Open any of them to see the live site.</p></div>
+ <div class="work" id="wk"></div>
+ <p class="wn">These are independent and personal projects, shown as examples of our design and development work.</p>
+</div></section>
+
+<section id="pricing" style="padding-top:20px"><div class="wrap">
+ <div class="head"><h2 class="rv">Clear pricing in rupees.</h2><p class="rv">All prices are starting estimates. Final quotes depend on the scope, features, content, and integrations you need.</p></div>
+ <div class="plans" id="plans"></div>
+ <div class="tw rv"><table><caption style="position:absolute;left:-999px">Compare plans</caption><thead><tr><th scope="col">Compare plans</th><th scope="col">Launch</th><th scope="col">Growth</th><th scope="col">Custom Build</th></tr></thead><tbody id="tb"></tbody></table></div>
+ <p class="pn">Integrations listed are examples of what can be connected. Exactly what is included, and any third-party fees, are confirmed in your written proposal. Hosting, domains, paid third-party services, extensive copywriting, ongoing maintenance, and advanced backend functionality are excluded unless specifically included in the written proposal.</p>
+ <div class="pc"><a class="btn" href="#contact" data-plan="Custom Build">Request a Custom Quote</a></div>
+</div></section>
+
+<section id="process" style="padding-top:20px"><div class="wrap">
+ <div class="head"><h2 class="rv">Our process.</h2><p class="rv">Scope and pricing are agreed before development begins.</p></div>
+ <div class="steps" id="steps"></div>
+</div></section>
+
+<section id="faq" style="padding:20px 0 92px"><div class="fp"><div><h2 class="rv">Frequently asked questions.</h2><p class="mute rv" style="margin-top:16px">Can't find your answer? Email tivariraj424@gmail.com.</p></div><div class="faq" id="fq"></div></div></section>
+
+<div class="wrap"><div class="ctb" id="contact">
+ <div><h2>Your next website starts with a conversation.</h2>
+  <p>Tell us what you're building. We'll help define the right approach, scope, and budget for your project.</p>
+  <a class="ml" href="mailto:tivariraj424@gmail.com">tivariraj424@gmail.com</a><p class="loc">Bengaluru, India</p>
+  <div class="acts"><button class="btn o" id="cp" type="button">Copy email</button><a class="btn o" href="#work">View Our Work</a></div></div>
+ <div><form id="form" novalidate>
+  <div class="row"><label>Name<input id="name" autocomplete="name"><span class="err" id="e1"></span></label><label>Email<input id="email" type="email" autocomplete="email"><span class="err" id="e2"></span></label></div>
+  <div class="row"><label>Plan<select id="plan"><option>Not sure yet</option><option>Launch Website</option><option>Growth Website</option><option>Custom Build</option></select></label>
+  <label>Approximate budget<select id="bud"><option>Not sure yet</option><option>₹8,000 to ₹10,000</option><option>₹10,000 to ₹20,000</option><option>₹20,000 to ₹35,000</option><option>₹35,000 to ₹50,000</option></select></label></div>
+  <label>About your project<textarea id="msg" placeholder="The website you need, your goals, and any reference websites."></textarea><span class="err" id="e3"></span></label>
+  <button class="btn" type="submit">Start Your Project</button></form>
+  <div class="ok" id="ok" role="status"><h3>Your email draft is ready.</h3><p>Your email app should open with the details filled in. Press send and we'll reply with next steps. You can also write to tivariraj424@gmail.com directly.</p></div></div>
+</div></div>
+</main>
+
+<footer class="ft"><div class="wrap"><div class="fc">
+<div><small>Explore</small><a href="#services">Services</a><a href="#work">Work</a><a href="#pricing">Pricing</a><a href="#process">Process</a><a href="#faq">FAQ</a><a href="#contact">Get in touch</a></div>
+<div><small>Selected work</small><a href="https://docswift.rajtivari.qd.je/" target="_blank" rel="noopener">DocSwift</a><a href="https://devvault.rajtivari.qd.je/" target="_blank" rel="noopener">DevVault</a><a href="https://rajtivari.github.io/ApexNova/" target="_blank" rel="noopener">ApexNova</a><a href="https://rajtivari.qd.je/" target="_blank" rel="noopener">Raj Tivari, Portfolio</a></div>
+<div><small>Services</small><span>Website Design</span><span>Web Development</span><span>Landing Pages</span><span>Custom Web Experiences</span></div>
+<div><small>Contact</small><a href="mailto:tivariraj424@gmail.com">tivariraj424@gmail.com</a><span>Bengaluru, India</span></div></div>
+<div class="wm" id="wm" aria-hidden="true">Mavern<sup>®</sup></div>
+<p><b>Digital experiences, built with purpose.</b><br>© <span id="yr">2026</span> Mavern Studio. All rights reserved.<br>Bengaluru, India</p></div></footer>
+
+
+<script src="./src/project-images.js"></script>
+<script src="./src/main.js"></script>
+</body>
+</html>
