@@ -128,9 +128,9 @@ const mul=(a,b)=>{const o=new Float32Array(16);for(let i=0;i<4;i++)for(let j=0;j
 const Tm=(x,y,z)=>{const m=I4();m[12]=x;m[13]=y;m[14]=z;return m},Sm=k=>{const m=I4();m[0]=m[5]=m[10]=k;return m};
 const Rx=a=>{const c=Math.cos(a),s=Math.sin(a),m=I4();m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m},Ry=a=>{const c=Math.cos(a),s=Math.sin(a),m=I4();m[0]=c;m[2]=-s;m[8]=s;m[10]=c;return m},Rz=a=>{const c=Math.cos(a),s=Math.sin(a),m=I4();m[0]=c;m[1]=s;m[4]=-s;m[5]=c;return m};
 const TEX={},dTex=(w,h,fn)=>{const c=document.createElement('canvas');c.width=w;c.height=h;fn(c.getContext('2d'),w,h);const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);[[gl.TEXTURE_MIN_FILTER,gl.LINEAR],[gl.TEXTURE_MAG_FILTER,gl.LINEAR],[gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE],[gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE]].forEach(a=>gl.texParameteri(gl.TEXTURE_2D,a[0],a[1]));return t};
-function mkTex(){TEX.M=dTex(256,256,(g,w,h)=>{g.fillStyle='#cfcfd2';g.beginPath();rr(g,0,0,w,h,34);g.fill();g.fillStyle='#141416';g.font=`900 148px ${FF}`;g.textAlign='center';g.textBaseline='middle';g.fillText('M',w/2,h/2-8);g.font='700 25px system-ui,sans-serif';g.fillText('MAVERN',w/2,h*.82)});
-TEX.V=dTex(128,384,(g,w,h)=>{g.translate(w/2,h/2);g.rotate(1.5708);g.fillStyle='#EAFFE6';g.font='900 70px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('MAVERN',0,4)});
-TEX.C=dTex(256,128,(g,w,h)=>{g.fillStyle='#141416';g.font=`800 96px ${FF}`;g.textAlign='center';g.textBaseline='middle';g.fillText('</>',w/2,h/2+6)})}
+function mkTex(){TEX.M=dTex(512,320,(g,w,h)=>{g.fillStyle='#171719';g.beginPath();rr(g,0,0,w,h,48);g.fill();g.strokeStyle='rgba(255,255,255,.26)';g.lineWidth=5;g.stroke();g.fillStyle='#f5f3ef';g.font=`900 104px ${FF}`;g.textAlign='center';g.textBaseline='middle';g.fillText('MAVERN',w/2,h*.44);g.fillStyle='#b8ff9f';g.fillRect(w*.25,h*.73,w*.5,5)});
+TEX.V=dTex(256,128,(g,w,h)=>{g.fillStyle='#102a13';g.fillRect(0,0,w,h);g.fillStyle='#39e65b';g.font='900 43px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('MAVERN',w/2,h/2);g.strokeStyle='rgba(255,255,255,.65)';g.lineWidth=3;g.strokeRect(5,5,w-10,h-10)});
+TEX.C=dTex(256,128,(g,w,h)=>{g.fillStyle='#171719';g.fillRect(0,0,w,h);g.fillStyle='#f5f3ef';g.font=`900 52px ${FF}`;g.textAlign='center';g.textBaseline='middle';g.fillText('STUDIO',w/2,h/2);g.fillStyle='#b8ff9f';g.fillRect(w*.32,h*.82,w*.36,4)})}
 mkTex();document.fonts&&document.fonts.ready.then(mkTex);
 const CR=[.82,.84,.88],eyelet=()=>({g:oval(7,9,2.3,20,8),c:CR,k:.82,m:Tm(0,-6,0)}),body=(g,c,k,x,y,z=0,rx=0,rz=0)=>({g,c,k,m:mul(Tm(x,y,z),mul(Rz(rz),Rx(rx)))}),dec=(g,t,x,y,z)=>({g,c:CR,k:0,t,m:Tm(x,y,z)});
 const CH={m:[eyelet(),body(rbox(96,96,26,13),[.025,.028,.032],.12,0,-62),dec(quad(78,78),'M',0,-62,13.6)],
@@ -140,7 +140,7 @@ coin:[eyelet(),body(lathe([[0,9],[16,9],[30,9],[36,7],[38,3],[38,-3],[36,-7],[30
 plate:[eyelet(),body(rbox(44,140,18,9),[.04,.55,.08],.18,0,-82),dec(quad(36,108),'V',0,-82,9.5)],
 code:[eyelet(),body(rbox(84,60,18,10),[1,.82,.2],.4,0,-44),dec(quad(62,31),'C',0,-44,9.5)]};
 const LG=oval(4.8,12.6,1.9,28,8),CAR=oval(22,64,8.5,40,10),CLA=rbox(16,30,12,5);let RG;
-const SP=[{off:-1.02,len:220,c:{t:'m',cw:100}},{off:-.72,len:300,c:{t:'can',cw:72}},{off:-.28,len:250,c:{t:'key',cw:64}},{off:.18,len:325,c:{t:'coin',cw:80}},{off:.62,len:210,c:{t:'plate',cw:50}},{off:.98,len:275,c:{t:'code',cw:84}}],ZS=[18,-48,48,-24,62,-62];
+const SP=[{off:-.82,len:205,c:{t:'m',cw:116}},{off:-.48,len:265,c:{t:'can',cw:84}},{off:-.12,len:240,c:{t:'key',cw:70}},{off:.20,len:285,c:{t:'coin',cw:88}},{off:.52,len:205,c:{t:'plate',cw:66}},{off:.82,len:245,c:{t:'code',cw:92}}],ZS=[22,-52,54,-28,68,-66];
 const r={cv,hero:true,vis:true,drop:RMM?0:-320,S:SP.map(d=>({d,P:[],ph:(Math.random()-.5)*1.8,pv:0}))};let VP,camZ;
 function build(){size(r);camZ=r.H/2/Math.tan(.2618);const f=1/Math.tan(.2618),a=r.W/r.H,P=new Float32Array(16);P[0]=f/a;P[5]=f;P[10]=-(4000+10)/3990;P[11]=-1;P[14]=-2*4000*10/3990;VP=mul(P,Tm(0,0,-camZ));gl.viewport(0,0,cv.width,cv.height);RG=oval(105,91,6.5,72,10)}
 build();new IntersectionObserver(e=>r.vis=e[0].isIntersecting).observe(box);addEventListener('resize',build);
