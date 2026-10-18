@@ -3,21 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f0e8">
+  <meta name="theme-color" content="#F1F1F2">
   <title>Page not found — Mavern Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    .not-found{min-height:75vh;display:grid;place-items:center;text-align:center;padding:5rem 1.25rem}.not-found-inner{max-width:760px}.not-found-code{font:500 .75rem 'DM Mono',monospace;letter-spacing:.16em;color:#c8174f}.not-found h1{font-size:clamp(4.5rem,15vw,10rem);line-height:.88;margin:1.4rem 0 1.2rem;letter-spacing:-.07em}.not-found h1 em{font-family:'Instrument Serif',serif;font-weight:400;color:#c8174f}.not-found p{max-width:440px;margin:0 auto 2rem;color:#69636a;line-height:1.7}.not-found .button{display:inline-flex}
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600;800&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/styles.css">
+  <style>.not-found{min-height:100vh;display:grid;place-items:center;text-align:center;padding:7rem 1.25rem 4rem}.not-found-inner{max-width:760px}.not-found-code{font:400 .75rem ui-monospace,Menlo,monospace;letter-spacing:.04em;color:var(--mute);margin-bottom:22px}.not-found h1{font:300 clamp(4rem,13vw,9rem)/.9 var(--b);letter-spacing:-.075em;max-width:none;margin:0 auto 24px}.not-found p{color:var(--mute);max-width:46ch;margin:0 auto 30px}.not-found .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.not-found .actions .btn.o{background:transparent;color:var(--ink)}.nf-mark{font:800 clamp(2rem,5vw,3.5rem) var(--w);margin-bottom:34px}.nf-mark sup{font-size:.5em}</style>
 </head>
 <body>
-  <div class="announcement"><span>INDEPENDENT DIGITAL STUDIO</span><span>MAVERN STUDIO <i>↗</i></span></div>
-  <header class="site-header"><a class="wordmark" href="./" aria-label="Mavern Studio home">mavern<span>.</span></a><a class="nav-cta" href="./#contact">Start a project <span>↗</span></a></header>
-  <main class="not-found"><div class="not-found-inner"><p class="not-found-code">ERROR 404 · WRONG TURN</p><h1>Lost your<br><em>way?</em></h1><p>This page doesn’t exist or may have moved. Let’s get you back to something useful.</p><a class="button button-dark" href="./">Back to Mavern Studio <span>↗</span></a></div></main>
-  <footer class="site-footer"><a class="wordmark" href="./">mavern<span>.</span></a><p>Websites worth talking about.</p><small>© <span id="year"></span> Mavern Studio.</small></footer>
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<header id="hd"><div class="wrap nav">
+<a class="logo" href="./" aria-label="Mavern Studio home">Mavern<sup>®</sup></a>
+<nav aria-label="Main"><ul id="menu"><li><a href="./#services">Services</a></li><li><a href="./#work">Work</a></li><li><a href="./#pricing">Pricing</a></li><li><a class="btn" href="./#contact">Start a Project</a></li></ul></nav>
+<a class="btn" href="./" style="display:none" id="desktop-home">Home</a>
+</div></header>
+<main class="not-found"><div class="not-found-inner">
+<div class="nf-mark">Mavern<sup>®</sup></div>
+<div class="not-found-code">ERROR 404 — PAGE NOT FOUND</div>
+<h1>Wrong turn.</h1>
+<p>The page you’re looking for isn’t here. It may have moved, or the link may be out of date.</p>
+<div class="actions"><a class="btn" href="./">Back to home ↗</a><a class="btn o" href="./#contact">Contact the studio</a></div>
+</div></main>
+<script>const b=document.querySelector('#bg'),m=document.querySelector('#menu');if(b&&m)b.addEventListener('click',()=>{const o=m.classList.toggle('open');b.setAttribute('aria-expanded',String(o))});</script>
 </body>
 </html>
