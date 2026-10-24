@@ -91,14 +91,14 @@ function setPointer(e){const r=canvas.getBoundingClientRect();pointer.set((e.cli
 function hover(e){setPointer(e);ray.setFromCamera(pointer,camera);const hit=ray.intersectObjects(pickables,false)[0];canvas.style.cursor=active?'grabbing':hit?'grab':'';}
 canvas.addEventListener('pointermove',e=>{
  const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;setPointer(e);
- if(active){active.velocity+=dx*.0032;active.angle=THREE.MathUtils.clamp(active.angle-dx*.006,-.9,.9);active.pivot.rotation.x=THREE.MathUtils.clamp(active.pivot.rotation.x+dy*.004,-.65,.65);return}
+ if(active){active.velocity+=dx*.0032;active.angle=THREE.MathUtils.clamp(active.angle-dx*.006,-.9,.9);active.pivot.rotation.z=active.angle;active.pivot.rotation.x=THREE.MathUtils.clamp(active.pivot.rotation.x+dy*.004,-.65,.65);return}
  hoverX=THREE.MathUtils.clamp(pointer.x,-1,1);hoverY=THREE.MathUtils.clamp(pointer.y,-1,1);
  // Cursor movement gives nearby strings a little impulse, like a physical desk object.
  swings.forEach(s=>{const screenX=s.pivot.position.x/1.5,screenY=(s.pivot.position.y-.4)/2.2,dist=Math.hypot(pointer.x-screenX,pointer.y-screenY);if(dist<.7&&Math.hypot(dx,dy)>1)s.velocity+=THREE.MathUtils.clamp(dx*.00007,-.026,.026)*(1-dist/.7)});
  hover(e);
 });
-canvas.addEventListener('pointerdown',e=>{setPointer(e);ray.setFromCamera(pointer,camera);const hit=ray.intersectObjects(pickables,false)[0];if(!hit)return;active=hit.object.userData.swing;active.velocity=0;lastX=e.clientX;lastY=e.clientY;canvas.style.cursor='grabbing';canvas.setPointerCapture?.(e.pointerId);});
-const release=()=>{if(active){active.velocity*=1.25;active=null}};
+canvas.addEventListener('pointerdown',e=>{setPointer(e);ray.setFromCamera(pointer,camera);const hit=ray.intersectObjects(pickables,false)[0];if(!hit)return;active=swings.find(s=>s.pivot===hit.object.userData.swing);if(!active)return;active.dragged=true;active.velocity=0;lastX=e.clientX;lastY=e.clientY;canvas.style.cursor='grabbing';canvas.setPointerCapture?.(e.pointerId);});
+const release=()=>{if(active){active.velocity*=1.25;active.dragged=false;active=null}};
 canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('pointerleave',e=>{if(!active){hoverX=0;hoverY=0;canvas.style.cursor=''}});
 canvas.addEventListener('pointermove',e=>{if(e.pointerType==='touch'&&active)e.preventDefault()},{passive:false});
 const resize=()=>{const r=host.getBoundingClientRect();if(!r.width||!r.height)return;renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.position.z=r.width<540?10:9;camera.updateProjectionMatrix()};
