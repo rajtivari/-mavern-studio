@@ -113,9 +113,9 @@ const host=$('#kc');
 let w=0,h=0,dpr=1,t=0,raf=0;
 const fit=()=>{const r=host.getBoundingClientRect();w=Math.max(1,r.width);h=Math.max(1,r.height);dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width='100%';canvas.style.height='100%';ctx.setTransform(dpr,0,0,dpr,0,0);};
 function path(points){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));}
-function metalStroke(points,width=3,color='#dfe5ed'){path(points);ctx.lineWidth=width;ctx.strokeStyle=color;ctx.lineJoin='round';ctx.lineCap='round';ctx.stroke();}
-function ellipse(x,y,rx,ry,angle=0,width=4,stroke='#e6e9ed',fill=null){ctx.beginPath();ctx.ellipse(x,y,rx,ry,angle,0,Math.PI*2);if(fill){ctx.fillStyle=fill;ctx.fill()}ctx.lineWidth=width;ctx.strokeStyle=stroke;ctx.stroke();}
-function rounded(x,y,ww,hh,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,ww,hh,r);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.lineWidth=2.4;ctx.strokeStyle=stroke;ctx.stroke();}}
+function metalStroke(points,width=3,color='#dfe5ed'){path(points);ctx.lineJoin='round';ctx.lineCap='round';ctx.lineWidth=width+3;ctx.strokeStyle='rgba(24,29,36,.32)';ctx.stroke();path(points);ctx.lineWidth=width;ctx.strokeStyle=color;ctx.stroke();path(points);ctx.lineWidth=Math.max(.7,width*.2);ctx.strokeStyle='rgba(255,255,255,.72)';ctx.stroke();}
+function ellipse(x,y,rx,ry,angle=0,width=4,stroke='#e6e9ed',fill=null){ctx.save();ctx.beginPath();ctx.ellipse(x,y,rx,ry,angle,0,Math.PI*2);if(fill){ctx.fillStyle=fill;ctx.fill()}ctx.lineWidth=width+2;ctx.strokeStyle='rgba(24,29,36,.22)';ctx.stroke();ctx.lineWidth=width;ctx.strokeStyle=stroke;ctx.stroke();ctx.beginPath();ctx.ellipse(x-rx*.12,y-ry*.1,rx*.82,ry*.82,angle,Math.PI*1.08,Math.PI*1.68);ctx.lineWidth=Math.max(.8,width*.2);ctx.strokeStyle='rgba(255,255,255,.82)';ctx.stroke();ctx.restore();}
+function rounded(x,y,ww,hh,r,fill,stroke){ctx.save();ctx.shadowColor='rgba(19,24,31,.28)';ctx.shadowBlur=9;ctx.shadowOffsetY=5;ctx.beginPath();ctx.roundRect(x,y,ww,hh,r);ctx.fillStyle=fill;ctx.fill();ctx.shadowColor='transparent';if(stroke){ctx.lineWidth=2.4;ctx.strokeStyle=stroke;ctx.stroke()}ctx.beginPath();ctx.roundRect(x+3,y+3,ww-6,Math.max(8,hh*.32),Math.max(2,r-2));ctx.fillStyle='rgba(255,255,255,.12)';ctx.fill();ctx.beginPath();ctx.roundRect(x+2,y+2,ww-4,hh-4,Math.max(2,r-2));ctx.lineWidth=.8;ctx.strokeStyle='rgba(255,255,255,.42)';ctx.stroke();ctx.restore();}
 function text(txt,x,y,size,color,font='700'){ctx.fillStyle=color;ctx.font=font+' '+size+'px Arial,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,x,y);}
 function chain(x,y1,y2,scale=1){let i=0;for(let y=y1;y<y2;y+=10*scale){ctx.save();ctx.translate(x,y);ctx.rotate(i%2?Math.PI/2:.12);const grad=ctx.createLinearGradient(-4*scale,0,4*scale,0);grad.addColorStop(0,'#343940');grad.addColorStop(.25,'#f8fbff');grad.addColorStop(.48,'#8e969f');grad.addColorStop(.72,'#fff');grad.addColorStop(1,'#41464d');ctx.beginPath();ctx.ellipse(0,0,3.1*scale,5.5*scale,0,0,Math.PI*2);ctx.lineWidth=1.6*scale;ctx.strokeStyle=grad;ctx.stroke();ctx.restore();i++;}}
 function draw(now){
@@ -142,6 +142,8 @@ const pink=ctx.createLinearGradient(45,0,90,0);pink.addColorStop(0,'#86116d');pi
 ctx.save();ctx.translate(95,89);ctx.rotate(-.12);const green=ctx.createLinearGradient(-20,0,20,0);green.addColorStop(0,'#15772b');green.addColorStop(.25,'#8bff9e');green.addColorStop(.5,'#19d83c');green.addColorStop(.78,'#56ff71');green.addColorStop(1,'#09691f');rounded(-18,-31,36,78,10,green,'#d8ffe0');rounded(-10,-23,20,62,4,'#101317','#1b4b29');text('M',0,-4,12,'#f4fff4','900');text('V',0,11,10,'#b7ffbd','900');text('N',0,24,8,'#fff','900');ctx.restore();
 /* connector eyelets in front of chains */
 xs.forEach((x,i)=>ellipse(x,ys[i]-3,4,5,.1,1.5,chrome));
+/* Subtle brushed reflections and a soft enamel sheen make the hardware read as real materials. */
+ctx.save();ctx.globalCompositeOperation='screen';const sheen=ctx.createRadialGradient(-74,4,3,-74,4,118);sheen.addColorStop(0,'rgba(255,255,255,.12)');sheen.addColorStop(.55,'rgba(255,255,255,.045)');sheen.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=sheen;ctx.fillRect(-200,-150,400,370);ctx.restore();
 ctx.restore();
 raf=requestAnimationFrame(draw);
 }
